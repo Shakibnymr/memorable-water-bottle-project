@@ -7,20 +7,28 @@ const Bottles = () => {
 
 const [bottles,setBottles] = useState([])
 
+const [cart, setCart] = useState([])
+
+
+const handleAddToCart = bottle => {
+ const newCart = [...cart,bottle]
+ setCart(newCart)
+}
 
 useEffect(()=>{
     fetch('bottles.json')
     .then(res => res.json())
     .then(data =>setBottles(data))
 },[])
-console.log(bottles)
+
     return (
         <div>
-            <p>Bottles: {bottles.length}</p>
+            <p>Bottles available: {bottles.length}</p>
+            <h3>Cart: {cart.length}</h3>
 
 <div className="bottle-container">
 {
-    bottles.map(bottle => <Bottle bottle={bottle} key={bottle.id}></Bottle>)
+    bottles.map(bottle => <Bottle handleAddToCart={handleAddToCart} bottle={bottle} key={bottle.id}></Bottle>)
 }
 
 </div>
